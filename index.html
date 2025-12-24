@@ -1,55 +1,114 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="author" content="Igor Anjos">
-        <title>Fuzuê Capoeira Ágil</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <style>
-            * {
-                margin: 5px;
-                padding: 0px;
-            }
-            .cor-fundo {
-                background-color: rgb(112, 190, 207);
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Igor Anjos">
+    <meta name="description" content="Fuzuê Capoeira Ágil - Links para redes sociais">
+    <meta name="theme-color" content="#70bedf">
+    <title>Fuzuê Capoeira Ágil</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <main>
+        <button 
+            class="theme-toggle" 
+            id="themeToggle"
+            aria-label="Alternar tema claro/escuro"
+            title="Alternar tema"
+        >
+            🌙
+        </button>
 
-            a:hover{
-                background-color: rgb(40, 156, 194);
-                color: rgba(255,255,255,1.0);
-            }
+        <header>
+            <img 
+                class="profile-image" 
+                src="./assets/igor.png" 
+                alt="Logo Fuzuê Capoeira Ágil"
+                loading="lazy"
+            >
+            <h1>Fuzuê Capoeira Ágil</h1>
+            <p class="subtitle">Conecte-se conosco</p>
+        </header>
 
-            .imagem {
-                width: 150px;
-                height: 150px;
-                border-radius: 50%;
-                display: block;
-                margin-left: auto;
-                margin-right: auto;
+        <nav aria-label="Links para redes sociais">
+            <a 
+                href="https://www.instagram.com/fuzuecapoeirati/" 
+                class="link-item link-instagram"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visitar Instagram do Fuzuê Capoeira"
+            >
+                Instagram
+            </a>
+            <a 
+                href="https://api.whatsapp.com/send?phone=5511948255689" 
+                class="link-item link-whatsapp"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Entrar em contato via WhatsApp"
+            >
+                WhatsApp
+            </a>
+            <a 
+                href="https://www.facebook.com/fuzuecapoeirati" 
+                class="link-item link-facebook"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visitar Facebook do Fuzuê Capoeira"
+            >
+                Facebook
+            </a>
+        </nav>
+
+        <footer>
+            <p>Desenvolvido por Igor Anjos &copy; 2020-2025</p>
+        </footer>
+    </main>
+
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+        
+        // Verificar preferência salva ou do sistema
+        const savedTheme = localStorage.getItem('theme');
+        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        // Definir tema inicial
+        if (savedTheme) {
+            html.setAttribute('data-theme', savedTheme);
+            updateToggleIcon(savedTheme);
+        } else if (systemPrefersDark) {
+            html.setAttribute('data-theme', 'dark');
+            updateToggleIcon('dark');
+        }
+        
+        // Alternar tema ao clicar
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateToggleIcon(newTheme);
+        });
+        
+        // Atualizar ícone do botão
+        function updateToggleIcon(theme) {
+            themeToggle.textContent = theme === 'dark' ? '☀️' : '🌙';
+            themeToggle.setAttribute('aria-label', 
+                theme === 'dark' ? 'Ativar tema claro' : 'Ativar tema escuro'
+            );
+        }
+        
+        // Detectar mudanças na preferência do sistema
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                const newTheme = e.matches ? 'dark' : 'light';
+                html.setAttribute('data-theme', newTheme);
+                updateToggleIcon(newTheme);
             }
-        </style>
-    </head>
-    <body>
-        <div class="container col-12 col-md-6">
-            <div class="jumbotron cor-fundo">
-                <div class="text-center">
-                    <img class="imagem" src="./assets/igor.png" alt="">
-                </div>
-                <hr class="my-4">
-                <p class="text-center">Árvores de links.</p>
-                <div class="list-group">
-                    <a href="https://www.instagram.com/fuzuecapoeirati/" class="list-group-item list-group-item text-center">Instagram</a>
-                    <a href="https://api.whatsapp.com/send?phone=5511948255689" class="list-group-item list-group-item text-center">WhatsApp</a>
-                    <a href="https://www.facebook.com/fuzuecapoeirati" class="list-group-item list-group-item text-center">Facebook</a>
-                </div>
-                <footer style="text-align: center; margin-top: 15px;">
-                    Desenvolvido por Igor Anjos - 2020
-                </footer>
-            </div>
-        </div>
-    </body>
+        });
+    </script>
+</body>
 </html>
